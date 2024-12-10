@@ -11,8 +11,6 @@ import { COLORS, FONTS, SIZES } from "../../constants";
 import MyJobCard from "../cards/my-job.card";
 
 export default function MyJobs() {
-  // const isLoading = true;
-  // const data = [];
   const { data, error, isLoading } = useRequest("search", {
     query: "react",
     page: 1,
@@ -33,6 +31,8 @@ export default function MyJobs() {
             renderItem={({ item }) => <MyJobCard item={item} />}
             keyExtractor={(item) => `job-${item.job_id}`}
             contentContainerStyle={{ columnGap: SIZES.medium }}
+            scrollEnabled={false}
+            nestedScrollEnabled={true}
           />
         )}
       </View>
@@ -45,8 +45,8 @@ const styles = StyleSheet.create({
     marginTop: SIZES.xLarge,
   },
   title: {
-    fontSize: SIZES.large,
-    fontFamily: FONTS.medium,
+    fontSize: SIZES.xLarge,
+    fontFamily: FONTS.bold,
     color: COLORS.primary,
   },
   jobsContainer: {

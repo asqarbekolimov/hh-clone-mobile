@@ -1,39 +1,47 @@
-import { useFonts } from 'expo-font'
-import * as SplashScreen from 'expo-splash-screen'
-import { SafeAreaView } from 'react-native'
-import React, { useCallback, useEffect } from 'react'
-import { GestureHandlerRootView } from 'react-native-gesture-handler'
-import { MyJobs, PopularJobs, Search } from '../components'
+import { View, Text, SafeAreaView } from "react-native";
+import React, { useCallback } from "react";
+import {
+  GestureHandlerRootView,
+  ScrollView,
+} from "react-native-gesture-handler";
+import { MyJobs, PopularJobs, Search } from "../components";
+import { useFonts } from "expo-font";
+import * as SplashScreen from "expo-splash-screen";
+import { SIZES } from "../constants";
+import { Stack } from "expo-router";
 
-SplashScreen.preventAutoHideAsync()
+SplashScreen.preventAutoHideAsync();
 
-export default function index() {
-	const [loaded, error] = useFonts({
-		'Roboto-Regular': require('../assets/fonts/Roboto-Regular.ttf'),
-		'Roboto-Bold': require('../assets/fonts/Roboto-Bold.ttf'),
-		'Roboto-Medium': require('../assets/fonts/Roboto-Medium.ttf'),
-	})
+export default function Index() {
+  const [fontsLoaded] = useFonts({
+    "Roboto-Regular": require("../assets/fonts/Roboto-Regular.ttf"),
+    "Roboto-Bold": require("../assets/fonts/Roboto-Bold.ttf"),
+    "Roboto-Medium": require("../assets/fonts/Roboto-Medium.ttf"),
+  });
 
-	useEffect(() => {
-		if (loaded || error) {
-			SplashScreen.hideAsync()
-		}
-	}, [loaded, error])
+  const onLayoutRootView = useCallback(async () => {
+    if (fontsLoaded) {
+      await SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded]);
 
-	if (!loaded && !error) {
-		return null
-	}
+  if (!fontsLoaded) {
+    return null;
+  }
 
-	return (
-		<SafeAreaView style={{ flex: 1, backgroundColor: '#eee' }}>
-			<GestureHandlerRootView
-				showsHorizontalScrollIndicator={false}
-				style={{ marginTop: 35 }}
-			>
-				<Search />
-				<MyJobs />
-				<PopularJobs />
-			</GestureHandlerRootView>
-		</SafeAreaView>
-	)
+  return (
+    <GestureHandlerRootView
+      style={{ flex: 1, backgroundColor: "#eee" }}
+      onLayout={onLayoutRootView}
+    >
+      <Stack.Screen options={{ headerShown: false }} />
+      <ScrollView showsHorizontalScrollIndicator={false}>
+        <View style={{ flex: 1, padding: SIZES.medium }}>
+          <Search />
+          <MyJobs />
+          {/* <PopularJobs /> */}
+        </View>
+      </ScrollView>
+    </GestureHandlerRootView>
+  );
 }
