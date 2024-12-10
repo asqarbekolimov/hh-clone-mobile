@@ -2,10 +2,17 @@ import { View, Text, StyleSheet, Image } from "react-native";
 import React from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { COLORS, FONTS, icons, SHADOWS, SIZES } from "../../constants";
+import { useRouter } from "expo-router";
 
 export default function MyJobCard({ item }) {
+  const router =useRouter()
+
+  const handlePress = () => {
+    router.push(`/details/${item.job_id}`);
+  }
+
   return (
-    <TouchableOpacity style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={handlePress}>
       <View style={styles.employerWrapper}>
         <View style={styles.employerHeader}>
         <Image
