@@ -4,7 +4,7 @@ import { COLORS, icons, SIZES, tabs } from '../../constants'
 import { Stack, useGlobalSearchParams, useRouter } from 'expo-router'
 import HeaderBtn from '../../components/shared/header-btn'
 import  useRequest  from '../../hook/useRequest'
-import { About, Job, JobTabs, Qualification, Responsibilities } from '../../components'
+import { About, Footer, Job, JobTabs, Qualification, Responsibilities } from '../../components'
 
 export default function Details() {
   const params = useGlobalSearchParams()
@@ -56,6 +56,8 @@ export default function Details() {
           </View>
         )}
       </ScrollView>
+
+      <Footer url={data[0].job_google_link ?? "https://careers.google.com/jobs/results"}/>
       </>
     </SafeAreaView>
   )
