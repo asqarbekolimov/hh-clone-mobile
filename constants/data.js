@@ -8,3 +8,5 @@ export const filterJobTypes = [
 	'Freelance',
 	'Remote',
 ]
+
+export const tabs= ['About', 'Qualifications', 'Responsibilities']
