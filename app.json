@@ -3,6 +3,7 @@
     "scheme": "your-app-scheme",
     "name": "hh-clone-mobile",
     "slug": "hh-clone-mobile",
+    "owner": "mr_coder_x",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
