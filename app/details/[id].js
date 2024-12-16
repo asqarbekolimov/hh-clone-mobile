@@ -52,12 +52,14 @@ export default function Details() {
           <View style={{padding:SIZES.medium, paddingBottom:SIZES.large}}>
             <Job companyLogo={data[0].employer_logo} jobTitle={data[0].job_title} companyName={data[0].employer_name} location={data[0].job_country}/>
             <JobTabs activeTab={activeTab} setActiveTab={setActiveTab}/>
-            {renderTabContent()}
+            <View style={{paddingBottom:80}}>
+              {renderTabContent()}
+            </View>
           </View>
         )}
       </ScrollView>
 
-      <Footer url={data[0].job_google_link ?? "https://careers.google.com/jobs/results"}/>
+      <Footer url={data[0]?.job_google_link ?? "https://careers.google.com/jobs/results"}/>
       </>
     </SafeAreaView>
   )
