@@ -6,12 +6,21 @@ import {
 	Image,
 	FlatList,
 } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import { StyleSheet } from 'react-native'
 import { COLORS, FONTS, SIZES, filterJobTypes, icons } from '../../constants'
+import { useRouter } from 'expo-router'
 
 export default function Search() {
-	const activeFilter = 'Full-Time'
+	const [activeJobType, setActiveJobType] = useState('Full-Time')
+
+	const router =useRouter()
+
+	const onPress = (item)=>{
+		setActiveJobType(item)
+		router.push(`/search/${item}`)
+	}
+
 	return (
 		<View>
 			<View style={styles.searchContainer}>
@@ -35,8 +44,8 @@ export default function Search() {
 				<FlatList
 					data={filterJobTypes}
 					renderItem={({ item }) => (
-						<TouchableOpacity style={styles.filter(activeFilter, item)}>
-							<Text style={styles.filterTitle(activeFilter, item)}>{item}</Text>
+						<TouchableOpacity style={styles.filter(activeJobType, item)} onPress={()=>onPress(item)}>
+							<Text style={styles.filterTitle(activeJobType, item)}>{item}</Text>
 						</TouchableOpacity>
 					)}
 					keyExtractor={item => `filter=job-${item}`}
