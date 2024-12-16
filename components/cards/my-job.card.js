@@ -4,15 +4,17 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { COLORS, FONTS, icons, SHADOWS, SIZES } from "../../constants";
 import { useRouter } from "expo-router";
 
-export default function MyJobCard({ item }) {
+export default function MyJobCard({ item, selectedJob, setSelectedJob }) {
+  
   const router =useRouter()
 
   const handlePress = () => {
     router.push(`/details/${item.job_id}`);
+    setSelectedJob(item?.job_id)
   }
 
   return (
-    <TouchableOpacity style={styles.container} onPress={handlePress}>
+    <TouchableOpacity style={styles.container(selectedJob, item?.job_id)} onPress={handlePress}>
       <View style={styles.employerWrapper}>
         <View style={styles.employerHeader}>
         <Image
@@ -30,20 +32,20 @@ export default function MyJobCard({ item }) {
           </Text>
         </View>
         <TouchableOpacity style={styles.heartBtnWrapper}>
-          <Image source={icons.heart} style={styles.heartIcon} />
+          <Image source={icons.heart} style={styles.heartIcon(selectedJob, item?.job_id)} />
         </TouchableOpacity>
       </View>
 
       <View style={styles.infoContainer}>
-        <Text style={styles.jobName}>{item?.job_title}</Text>
+        <Text style={styles.jobName(selectedJob, item?.job_id)}>{item?.job_title}</Text>
 
         <View style={styles.infoWrapper}>
-          <Text style={styles.info1}>Employer type - </Text>
-          <Text style={styles.info2}>{item?.job_employment_type}</Text>
+          <Text style={styles.info1(selectedJob, item?.job_id)}>Employer type - </Text>
+          <Text style={styles.info2(selectedJob, item?.job_id)}>{item?.job_employment_type}</Text>
         </View>
         <View style={styles.infoWrapper}>
-          <Text style={styles.info1}>{item?.job_publisher} - </Text>
-          <Text style={styles.info2}>{item?.job_country}</Text>
+          <Text style={styles.info1(selectedJob, item?.job_id)}>{item?.job_publisher} - </Text>
+          <Text style={styles.info2(selectedJob, item?.job_id)}>{item?.job_country}</Text>
         </View>
       </View>
     </TouchableOpacity>
@@ -51,15 +53,15 @@ export default function MyJobCard({ item }) {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  container:(selectedJob, job_id) =>({
     width: "100%",
     marginTop: SIZES.medium,
     padding: SIZES.xLarge,
-    backgroundColor: COLORS.lightWhite,
+    backgroundColor: selectedJob === job_id ? COLORS.secondary: COLORS.lightWhite,
     borderRadius: SIZES.medium,
     ...SHADOWS.medium,
     shadowColor: COLORS.white,
-  },
+  }),
   employerLogo: {
     width: 50,
     height: 50,
@@ -68,10 +70,11 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     flexDirection: "row",
   },
-  heartIcon: {
+  heartIcon:(selectedJob, job_id)=> ({
     width: 20,
     height: 20,
-  },
+    tintColor: selectedJob === job_id ? COLORS.white : COLORS.primary,
+  }),
   employerHeader: {
     flexDirection: "row",
     alignItems: "center",
@@ -85,25 +88,25 @@ const styles = StyleSheet.create({
   infoContainer: {
     marginTop: SIZES.medium,
   },
-  jobName: {
+  jobName:(selectedJob, job_id)=> ({
     fontSize: SIZES.large,
     fontFamily: FONTS.bold,
-    color: COLORS.secondary,
-  },
+    color: selectedJob === job_id ? COLORS.white : COLORS.secondary,
+  }),
   infoWrapper:{
     flexDirection: "row",
     marginTop: SIZES.small/2,
     justifyContent:"flex-start",
     alignItems:"center"
   },
-  info1: {
+  info1:(selectedJob, job_id)=> ({
     fontSize: SIZES.medium,
     fontFamily: FONTS.medium,
-    color: COLORS.primary,
-  },
-  info2: {
+    color: selectedJob ? COLORS.gray2 : COLORS.primary,
+  }),
+  info2:(selectedJob, job_id)=> ({
     fontSize: SIZES.small,
     fontFamily: FONTS.regular,
     color: COLORS.gray,
-  },
+  }),
 });

@@ -5,12 +5,14 @@ import {
   ActivityIndicator,
   FlatList,
 } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import useRequest from "../../hook/useRequest";
 import { COLORS, FONTS, SIZES } from "../../constants";
 import MyJobCard from "../cards/my-job.card";
 
 export default function MyJobs() {
+  const [selectedJob, setSelectedJob] = useState(null)
+
   const { data, error, isLoading } = useRequest("search", {
     query: "react",
     page: 1,
@@ -25,10 +27,10 @@ export default function MyJobs() {
       <View style={styles.jobsContainer}>
         {isLoading ? (
           <ActivityIndicator size={"small"} color={COLORS.primary} />
-        ) : (
+        ) : error ? <Text>Something went wrong</Text> : (
           <FlatList
             data={data}
-            renderItem={({ item }) => <MyJobCard item={item} />}
+            renderItem={({ item }) => <MyJobCard selectedJob={selectedJob} setSelectedJob={setSelectedJob} item={item} />}
             keyExtractor={(item) => `job-${item.job_id}`}
             contentContainerStyle={{ columnGap: SIZES.medium }}
             scrollEnabled={false}
