@@ -13,12 +13,20 @@ import { useRouter } from 'expo-router'
 
 export default function Search() {
 	const [activeJobType, setActiveJobType] = useState('Full-Time')
+	const [term, setTerm] = useState("")
 
 	const router =useRouter()
 
 	const onPress = (item)=>{
 		setActiveJobType(item)
 		router.push(`/search/${item}`)
+	}
+
+	const onSearchPress = ()=>{
+		if(term.trim().length===0){
+			return
+		}
+		router.push(`/search/${term}`)
 	}
 
 	return (
@@ -28,9 +36,11 @@ export default function Search() {
 					<TextInput
 						style={styles.searchInput}
 						placeholder='What are you looking for?'
+						value={term}
+						onChangeText={text=>setTerm(text)}
 					/>
 				</View>
-				<TouchableOpacity style={styles.searchBtn}>
+				<TouchableOpacity style={styles.searchBtn} onPress={onSearchPress}>
 					<Image
 						style={styles.searchBtnIcon}
 						source={icons.search}

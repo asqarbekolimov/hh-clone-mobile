@@ -1,5 +1,5 @@
-import { View, Text, ScrollView, ActivityIndicator,SafeAreaView } from 'react-native'
-import React, { useState } from 'react'
+import { View, Text, ScrollView, ActivityIndicator,SafeAreaView, RefreshControl } from 'react-native'
+import React, { useCallback, useState } from 'react'
 import { COLORS, icons, SIZES, tabs } from '../../constants'
 import { Stack, useGlobalSearchParams, useRouter } from 'expo-router'
 import HeaderBtn from '../../components/shared/header-btn'
@@ -11,6 +11,13 @@ export default function Details() {
   const router = useRouter()
 
   const [activeTab, setActiveTab] = useState(tabs[0])
+  const [refreshing, setRefreshing] = useState(false)
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true)
+    refetch()
+    setRefreshing(false)
+  }, [])
 
   const {data, isLoading, error, refetch} =useRequest('job-details', {
     job_id: params.id
@@ -41,7 +48,9 @@ export default function Details() {
         headerRight: () => <HeaderBtn icon={icons.share} dimensions={'60%'}/>
       }}/>
       <>
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView showsVerticalScrollIndicator={false}
+      refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>}
+      >
         {isLoading ? (
           <ActivityIndicator size={"small"} color={COLORS.primary} />
         ): error ? (
