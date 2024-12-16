@@ -15,14 +15,14 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "uz.asqarbekdev.hh-clone" 
+      "bundleIdentifier": "uz.asqarbekdev.hhclone" 
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "uz.asqarbekdev.hh-clone" 
+      "package": "uz.asqarbekdev.hhclone" 
     },
     "web": {
       "favicon": "./assets/favicon.png"
