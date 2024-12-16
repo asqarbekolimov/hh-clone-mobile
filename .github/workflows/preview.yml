@@ -1,5 +1,9 @@
-name: preview
-on: pull_request
+name: "HH-clone"
+on: 
+  push:
+    branches:
+      - main
+  workflow_dispatch:
 
 jobs:
   update:
